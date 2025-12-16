@@ -18,9 +18,71 @@ from monet import Monet, MonetConfig
 
 def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter, epilog=r"""
-Example usage:
+Generate virtual cell paint images from brightfield microscopy images.
 
-TODO
+```bash
+# Single brightfield image (simplest usage)
+python generate_cellpaint.py my_brightfield.png -o output/
+
+# Directory of multiple brightfield images
+python generate_cellpaint.py input_folder/ -o output/
+
+# With custom checkpoint and settings
+python generate_cellpaint.py input_folder/ -o output/ --checkpoint my_model.pt --diffusion_steps 20 --batch_size 4
+```
+
+**Input folder layouts:**
+
+*Multiple brightfield images (no suffixes = treated as brightfield)*
+```
+input_folder/
+├── 00000.png          # brightfield image 1
+├── 00001.png          # brightfield image 2
+├── 00002.png          # brightfield image 3
+└── 00003.png          # brightfield image 4
+```
+
+*With reference conditioning (for consistent style/domain adaptation)*
+```
+input_folder/
+├── sample1_brightfield.png            # brightfield to cellpaint
+├── sample1_brightfield_reference.png  # reference brightfield for conditioning
+├── sample1_mito.png                   # reference mitochondria channel
+├── sample1_rna.png                    # reference RNA channel
+├── sample1_er.png                     # reference ER channel
+├── sample1_dna.png                    # reference DNA channel
+└── sample1_agp.png                    # reference AGP/cytoskeleton channel
+```
+
+**Example input/output:**
+
+*Input:*
+```
+input_folder/
+├── 00000.png          # brightfield image with prefix "00000"
+├── 00001.png          # brightfield image with prefix "00001"
+└── 00002.png          # brightfield image with prefix "00002"
+```
+
+*Output:*
+```
+output/
+├── 00000.png          # composite RGB image
+├── 00000_mito.png     # mitochondria channel
+├── 00000_rna.png      # RNA channel
+├── 00000_er.png       # ER channel
+├── 00000_dna.png      # DNA channel
+├── 00000_agp.png      # AGP/cytoskeleton channel
+├── 00001.png
+├── 00001_mito.png
+├── 00001_rna.png
+├── 00001_er.png
+├── 00001_dna.png
+├── 00001_agp.png
+├── 00002.png
+├── 00002_mito.png
+...
+```
 """)
     parser.add_argument("--device", type=str, default="cuda", help="Device to use")
     parser.add_argument("--batch_size", type=int, default=5, help='Batch size to use.')

@@ -17,9 +17,31 @@ from monet import Monet, MonetConfig
 
 def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter, epilog=r"""
-Example usage:
+Generate temporally consistent cell paint videos from brightfield time-lapse data. Uses reference conditioning to maintain visual consistency across frames.
 
-TODO
+```bash
+# From a video file
+python generate_cellpaint_video.py timelapse.mp4 -o cellpaint_video.mp4
+
+# From a directory of ordered frames
+python generate_cellpaint_video.py frames_folder/ -o cellpaint_video.mp4
+
+# With custom settings
+python generate_cellpaint_video.py frames_folder/ -o output.mp4 --checkpoint my_model.pt --diffusion_steps 20
+```
+
+**Input folder layout (frames in lexicographic order):**
+```
+frames_folder/
+├── frame_0000.png     # grayscale brightfield frame 1
+├── frame_0001.png     # grayscale brightfield frame 2
+├── frame_0002.png     # grayscale brightfield frame 3
+├── frame_0003.png     # grayscale brightfield frame 4
+...
+└── frame_0099.png     # grayscale brightfield frame 100
+```
+
+**Note:** All input images must be grayscale. The first frame is generated unconditionally, then subsequent frames are conditioned on the first frame generation to maintain temporal consistency.
 """)
     parser.add_argument("--device", type=str, default="cuda", help="Device to use")
     parser.add_argument("--diffusion_steps", type=int, default=10, help='Number of diffusion steps to use.')
