@@ -5,7 +5,7 @@ This is a set of smoke tests that run the scripts with some example data.
 import os
 
 if not os.path.exists("monet_example_data_cpg0002/"):
-    assert os.system("wget https://github.com/Integrated-Biosciences/monet/releases/download/test_data/monet_example_data_cpg0002.tar")
+    assert os.system("wget https://github.com/Integrated-Biosciences/monet/releases/download/test_data/monet_example_data_cpg0002.tar") == 0
     assert os.system("tar -xvf monet_example_data_cpg0002.tar") == 0
 
 assert os.system(r"""torchrun --nproc_per_node=1 train.py \
