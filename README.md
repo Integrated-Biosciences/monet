@@ -7,6 +7,7 @@ MONET is a 350M parameter UNet-based diffusion model trained on 8M+ images from 
 
 📄 Paper: [arXiv:2512.11928](https://arxiv.org/abs/2512.11928)
 🖼️ Examples: [thiscellpaintingdoesnotexist.com](https://thiscellpaintingdoesnotexist.com)
+🤗 Model: [IntegratedBiosciences/monet](https://huggingface.co/IntegratedBiosciences/monet)
 
 ## Example environment setup with uv venv
 ```bash
