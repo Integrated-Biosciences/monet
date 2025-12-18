@@ -200,3 +200,6 @@ my_finetune/
 ```
 
 Training progress is logged to Weights & Biases under the project `monet_finetuning`.
+
+# Licensing
+The model weights at [IntegratedBiosciences/monet](https://huggingface.co/IntegratedBiosciences/monet) are licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
